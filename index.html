@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noice - Michael Rosen Meme</title>
+    <title>Noice App - Coming Soon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #121212;
@@ -11,25 +14,64 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 40px 20px;
+            font-family: 'Roboto', sans-serif;
             flex-direction: column;
+            text-align: center;
         }
         h1 {
             font-size: 3rem;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 30px;
         }
         img {
-            max-width: 90%;
+            max-width: 300px;
+            width: 100%;
             height: auto;
             border-radius: 15px;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+        }
+        ul.features {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+            max-width: 500px;
+            text-align: left;
+        }
+        ul.features li {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        .emoji {
+            margin-right: 10px;
+        }
+        @media(max-width:600px){
+            h1 { font-size: 2.5rem; }
+            .tagline { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
-    <h1>Noice.</h1>
+    <h1>Noice App</h1>
+    <div class="tagline">🚀 Coming Soon 🚀</div>
     <img src="nice-good.gif" alt="Noice Meme - Michael Rosen">
+    <p>Noice is a powerful mobile application that transforms conversations into actionable insights using AI-powered transcription technology.</p>
+
+    <ul class="features">
+        <li><span class="emoji">🎙️</span> Audio Recording: Crystal-clear audio recording for meetings and lectures</li>
+        <li><span class="emoji">✍️</span> Real-time Transcription: Instant speech-to-text conversion</li>
+        <li><span class="emoji">🤖</span> AI Summaries: Get smart summaries with key points and action items</li>
+        <li><span class="emoji">📱</span> Background Processing: Continue transcribing even when your screen is off</li>
+        <li><span class="emoji">🔔</span> Push Notifications: Get notified when your transcriptions are ready</li>
+        <li><span class="emoji">🔒</span> Secure Storage: Safe and accessible storage across all your devices</li>
+        <li><span class="emoji">🌙</span> Dark Mode: Comfortable viewing in any lighting condition</li>
+        <li><span class="emoji">🔐</span> Authentication: Secure sign-in with email, Google, and Apple accounts</li>
+    </ul>
 </body>
 </html>
+
