@@ -70,62 +70,58 @@
             .container { padding: 30px 15px; }
         }
     </style>
+    <script src="lang.js"></script>
+    <script src="terms-content.js"></script>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-link">← Back to Home</a>
+        <a href="index.html" class="back-link" data-i18n="backToHome">← Back to Home</a>
         
-        <h1>Terms of Service for Noice</h1>
-        <p class="effective-date">Effective Date: December 24, 2024</p>
-
-        <h2>1. Acceptance of Terms</h2>
-        <p>By downloading, accessing, or using Noice ("the Service"), you agree to be bound by these Terms of Service. If you do not agree, you may not use the Service.</p>
-
-        <h2>2. Use of the Service</h2>
-        <p>You must be at least 13 years old (or the minimum legal age in your country) to use Noice.</p>
-        <p>You agree not to use the Service for any unlawful or prohibited purpose, including but not limited to:</p>
-        <ul>
-            <li>Uploading harmful, abusive, or infringing content</li>
-            <li>Circumventing usage limits or fair use policies</li>
-            <li>Reselling, redistributing, or reverse-engineering the service</li>
-            <li>Using automation to create or process large-scale requests</li>
-        </ul>
-
-        <h2>3. Account & Security</h2>
-        <p>You are responsible for maintaining the confidentiality of your login credentials and for any activity that occurs under your account. You must notify us immediately if you suspect unauthorized use.</p>
-
-        <h2>4. Subscriptions and Billing</h2>
-        <ul>
-            <li>Free and paid subscription tiers are available.</li>
-            <li>Paid plans include a monthly or annual quota for transcription or processing minutes.</li>
-            <li>Subscriptions renew automatically unless cancelled prior to the billing cycle.</li>
-            <li>Payments are handled by secure third-party processors.</li>
-            <li>Refunds are only issued where required by law or in limited cases at our discretion.</li>
-        </ul>
-
-        <h2>5. Ownership and Content Rights</h2>
-        <ul>
-            <li>You retain ownership of your audio, transcripts, and notes.</li>
-            <li>By using the Service, you grant us a limited license to store and process your content solely for delivering the Service.</li>
-            <li>We do not claim ownership of user content, nor do we use it to train AI models.</li>
-        </ul>
-
-        <h2>6. Service Availability and Disclaimer</h2>
-        <p>The Service is provided "as is" and "as available" without warranties of any kind. We do not guarantee uninterrupted access, error-free operation, or perfect accuracy of the transcription or summarization features.</p>
-        <p>We reserve the right to modify or discontinue features without notice.</p>
-
-        <h2>7. Termination</h2>
-        <p>You may stop using the Service at any time. We reserve the right to suspend or terminate access for violations of these Terms or misuse of the Service.</p>
-        <p>Upon termination, your content may be deleted according to our retention policy.</p>
-
-        <h2>8. Limitation of Liability</h2>
-        <p>To the extent permitted by law, Noice shall not be liable for indirect, incidental, or consequential damages, or loss of data, arising out of your use of the Service.</p>
-
-        <h2>9. Changes to the Terms</h2>
-        <p>We may update these Terms at any time. We will notify you of significant changes via email or in-app. Continued use constitutes acceptance of the updated Terms.</p>
-
-        <h2>10. Contact</h2>
-        <p>If you have questions or concerns about these Terms, contact us at <a href="mailto:support@getnoice.app" class="contact-email">support@getnoice.app</a>.</p>
+        <h1 data-i18n="termsTitle">Terms of Service for Noice</h1>
+        <p class="effective-date" data-i18n="effectiveDate">Effective Date: December 24, 2024</p>
+        
+        <div id="terms-content">
+            <!-- Content will be loaded dynamically based on language -->
+        </div>
     </div>
+    
+    <script>
+        // Load terms content based on language
+        document.addEventListener('DOMContentLoaded', function() {
+            function loadTermsContent() {
+                const lang = langManager.currentLang;
+                const content = termsContent[lang] || termsContent.en;
+                const container = document.getElementById('terms-content');
+                
+                container.innerHTML = content.sections.map(section => {
+                    let html = `<h2>${section.title}</h2>`;
+                    if (section.content) {
+                        html += `<p>${section.content}</p>`;
+                    }
+                    if (section.extra) {
+                        html += `<p>${section.extra}</p>`;
+                    }
+                    if (section.list) {
+                        html += '<ul>';
+                        section.list.forEach(item => {
+                            html += `<li>${item}</li>`;
+                        });
+                        html += '</ul>';
+                    }
+                    return html;
+                }).join('');
+            }
+            
+            // Load content on page load
+            loadTermsContent();
+            
+            // Update content when language changes
+            const originalSetLanguage = langManager.setLanguage.bind(langManager);
+            langManager.setLanguage = function(lang) {
+                originalSetLanguage(lang);
+                loadTermsContent();
+            };
+        });
+    </script>
 </body>
 </html>
