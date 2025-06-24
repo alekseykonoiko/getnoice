@@ -103,42 +103,50 @@ class LanguageManager {
     }
     
     detectLanguage() {
+        console.log('🌍 Detecting language...');
+        
         // Check localStorage first
         const savedLang = localStorage.getItem('noice-lang');
+        console.log('💾 Saved language from localStorage:', savedLang);
         if (savedLang && translations[savedLang]) {
+            console.log('✅ Using saved language:', savedLang);
             return savedLang;
         }
         
-        // Auto-detect based on browser/region
-        const browserLang = navigator.language || navigator.userLanguage;
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        // Auto-detect based on browser language preferences
+        const browserLangs = navigator.languages || [navigator.language || navigator.userLanguage];
+        const primaryLang = browserLangs[0];
+        console.log('🌐 Browser languages:', browserLangs);
+        console.log('🌐 Primary language:', primaryLang);
         
-        // Russian for Russia, Belarus, Kazakhstan, etc.
-        if (browserLang.startsWith('ru') || 
-            timezone.includes('Moscow') || 
-            timezone.includes('Minsk') || 
-            timezone.includes('Almaty')) {
-            return 'ru';
-        }
-        
-        // Spanish for Spanish-speaking countries
-        if (browserLang.startsWith('es') || 
-            timezone.includes('Madrid') || 
-            timezone.includes('Barcelona') || 
-            timezone.includes('Europe/Madrid')) {
-            return 'es';
+        // Check all browser languages for matches
+        for (const lang of browserLangs) {
+            if (lang.startsWith('ru') || lang.includes('ru-')) {
+                console.log('🇷🇺 Detected Russian from browser languages');
+                return 'ru';
+            }
+            if (lang.startsWith('es') || lang.includes('es-')) {
+                console.log('🇪🇸 Detected Spanish from browser languages');
+                return 'es';
+            }
         }
         
         // Default to English
+        console.log('🇺🇸 Defaulting to English');
         return 'en';
     }
     
     setLanguage(lang) {
+        console.log('🔄 Setting language to:', lang);
         if (translations[lang]) {
             this.currentLang = lang;
             localStorage.setItem('noice-lang', lang);
+            console.log('💾 Language saved to localStorage:', lang);
             this.updatePageContent();
             this.updateLanguageLinks();
+            console.log('✅ Language change complete');
+        } else {
+            console.error('❌ Invalid language:', lang);
         }
     }
     
@@ -161,30 +169,63 @@ class LanguageManager {
     }
     
     updateLanguageLinks() {
+        console.log('🔗 Updating language links...');
         // Update navigation links to include language parameter
-        document.querySelectorAll('a[href^="index.html"], a[href^="privacy.html"], a[href^="terms.html"], a[href="index.html"], a[href="privacy.html"], a[href="terms.html"]').forEach(link => {
+        // Select all links that point to local HTML files
+        const links = document.querySelectorAll('a[href$=".html"], a[href*=".html?"], a[href*=".html#"]');
+        console.log('🔍 Found potential links:', links.length);
+        
+        links.forEach((link, index) => {
             const href = link.getAttribute('href');
+            console.log(`🔗 Link ${index + 1} original href:`, href);
             if (href && !href.startsWith('http') && !href.startsWith('mailto:')) {
-                const baseHref = href.split('?')[0];
-                link.href = `${baseHref}?lang=${this.currentLang}`;
+                const [baseHref, hash] = href.split('#');
+                const cleanHref = baseHref.split('?')[0];
+                console.log(`🔗 Link ${index + 1} clean href:`, cleanHref);
+                // Only update if it's one of our main pages
+                if (cleanHref === 'index.html' || cleanHref === 'privacy.html' || cleanHref === 'terms.html') {
+                    const newHref = `${cleanHref}?lang=${this.currentLang}${hash ? '#' + hash : ''}`;
+                    link.href = newHref;
+                    console.log(`🔗 Link ${index + 1} updated to:`, newHref);
+                } else {
+                    console.log(`🔗 Link ${index + 1} skipped (not a main page)`);
+                }
             }
         });
     }
     
     init() {
+        console.log('🚀 Initializing language manager...');
+        console.log('📍 Current page:', window.location.pathname);
+        console.log('🔍 URL search params:', window.location.search);
+        
         // Check URL parameter for language override
         const urlParams = new URLSearchParams(window.location.search);
         const urlLang = urlParams.get('lang');
+        console.log('🔗 Language from URL:', urlLang);
+        
         if (urlLang && translations[urlLang]) {
+            console.log('✅ Using URL language:', urlLang);
             this.currentLang = urlLang;
             localStorage.setItem('noice-lang', urlLang);
         }
         
+        console.log('🌐 Final language choice:', this.currentLang);
+        
         // Initialize language on page load
-        document.addEventListener('DOMContentLoaded', () => {
+        if (document.readyState === 'loading') {
+            console.log('⏳ DOM still loading, waiting...');
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('📄 DOM loaded, updating page content...');
+                this.updatePageContent();
+                this.createLanguageSwitcher();
+            });
+        } else {
+            console.log('📄 DOM already loaded, updating immediately...');
+            // DOM is already loaded
             this.updatePageContent();
             this.createLanguageSwitcher();
-        });
+        }
     }
     
     createLanguageSwitcher() {
@@ -302,9 +343,21 @@ class LanguageManager {
                 switcher.classList.remove('active');
                 
                 // Update active state
-                switcher.querySelectorAll('[data-lang]').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                this.updateSwitcherActiveState(switcher);
             });
+        });
+        
+        // Set initial active state
+        this.updateSwitcherActiveState(switcher);
+    }
+    
+    updateSwitcherActiveState(switcher) {
+        // Update active state for language switcher buttons
+        switcher.querySelectorAll('[data-lang]').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.getAttribute('data-lang') === this.currentLang) {
+                btn.classList.add('active');
+            }
         });
     }
 }
