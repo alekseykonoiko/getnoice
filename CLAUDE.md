@@ -7,8 +7,12 @@ This is a simple static landing page for the Noice App, hosted on GitHub Pages a
 ```
 /Users/akonoiko/getnoice/
 ├── CNAME           # Domain configuration for getnoice.com
-├── index.html      # Main landing page
-└── nice-good.gif   # Animated GIF asset
+├── index.html      # Main landing page with footer
+├── privacy.html    # Privacy Policy page
+├── terms.html      # Terms of Service page
+├── nice-good.gif   # Animated GIF asset
+├── .gitignore      # Git exclusions
+└── README.md       # Deployment instructions
 ```
 
 ## Landing Page Features
@@ -16,6 +20,8 @@ This is a simple static landing page for the Noice App, hosted on GitHub Pages a
 - **Typography**: Roboto font from Google Fonts
 - **Responsive**: Mobile-friendly with media queries for screens under 600px
 - **Content**: "Coming Soon" page showcasing the app's planned features
+- **Footer**: Links to Privacy Policy, Terms of Service, and support email
+- **Legal Pages**: Styled Privacy Policy and Terms of Service pages matching site theme
 
 ## Advertised App Features
 The landing page lists the following planned features for the Noice App:
