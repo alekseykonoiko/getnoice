@@ -50,9 +50,36 @@
         .emoji {
             margin-right: 10px;
         }
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            text-align: center;
+        }
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #bb86fc;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        .copyright {
+            color: #666;
+            font-size: 0.85rem;
+        }
         @media(max-width:600px){
             h1 { font-size: 2.5rem; }
             .tagline { font-size: 1.1rem; }
+            .footer-links a {
+                display: block;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -72,6 +99,17 @@
         <li><span class="emoji">🌙</span> Dark Mode: Comfortable viewing in any lighting condition</li>
         <li><span class="emoji">🔐</span> Authentication: Secure sign-in with email, Google, and Apple accounts</li>
     </ul>
+
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="mailto:support@getnoice.app">Contact</a>
+        </div>
+        <div class="copyright">
+            © 2024 Noice App. All rights reserved.
+        </div>
+    </footer>
 </body>
 </html>
 
