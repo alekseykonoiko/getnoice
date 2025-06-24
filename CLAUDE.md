@@ -6,13 +6,16 @@ This is a simple static landing page for the Noice App, hosted on GitHub Pages a
 ## Current Structure
 ```
 /Users/akonoiko/getnoice/
-├── CNAME           # Domain configuration for getnoice.com
-├── index.html      # Main landing page with footer
-├── privacy.html    # Privacy Policy page
-├── terms.html      # Terms of Service page
-├── nice-good.gif   # Animated GIF asset
-├── .gitignore      # Git exclusions
-└── README.md       # Deployment instructions
+├── CNAME              # Domain configuration for getnoice.com
+├── index.html         # Main landing page with footer
+├── privacy.html       # Privacy Policy page
+├── terms.html         # Terms of Service page
+├── lang.js            # Language detection and switching logic
+├── privacy-content.js # Privacy Policy translations (EN/ES/RU)
+├── terms-content.js   # Terms of Service translations (EN/ES/RU)
+├── nice-good.gif      # Animated GIF asset
+├── .gitignore         # Git exclusions
+└── README.md          # Deployment instructions
 ```
 
 ## Landing Page Features
@@ -22,6 +25,10 @@ This is a simple static landing page for the Noice App, hosted on GitHub Pages a
 - **Content**: "Coming Soon" page showcasing the app's planned features
 - **Footer**: Links to Privacy Policy, Terms of Service, and support email
 - **Legal Pages**: Styled Privacy Policy and Terms of Service pages matching site theme
+- **Multi-language Support**: English, Spanish, and Russian translations
+- **Language Detection**: Automatic detection based on browser settings and timezone
+- **Language Switcher**: Globe icon UI for manual language selection
+- **Persistence**: Language preference saved in localStorage
 
 ## Advertised App Features
 The landing page lists the following planned features for the Noice App:
@@ -42,4 +49,8 @@ The landing page lists the following planned features for the Noice App:
 - **Dependencies**: Google Fonts (Roboto)
 
 ## Development Notes
-This is currently a simple static HTML page with no build process, package management, or JavaScript functionality. The page serves as a placeholder/coming soon announcement for the actual Noice App.
+- Static site with client-side JavaScript for language management
+- No build process or package management required
+- Language content stored in separate JS files for easy maintenance
+- Automatic language detection for Russia/Belarus (Russian), Spanish-speaking countries (Spanish), others (English)
+- All translations are complete for main content, Privacy Policy, and Terms of Service

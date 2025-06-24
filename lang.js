@@ -122,7 +122,10 @@ class LanguageManager {
         }
         
         // Spanish for Spanish-speaking countries
-        if (browserLang.startsWith('es')) {
+        if (browserLang.startsWith('es') || 
+            timezone.includes('Madrid') || 
+            timezone.includes('Barcelona') || 
+            timezone.includes('Europe/Madrid')) {
             return 'es';
         }
         
@@ -159,10 +162,12 @@ class LanguageManager {
     
     updateLanguageLinks() {
         // Update navigation links to include language parameter
-        document.querySelectorAll('a[href^="index.html"], a[href^="privacy.html"], a[href^="terms.html"]').forEach(link => {
-            const url = new URL(link.href);
-            url.searchParams.set('lang', this.currentLang);
-            link.href = url.toString();
+        document.querySelectorAll('a[href^="index.html"], a[href^="privacy.html"], a[href^="terms.html"], a[href="index.html"], a[href="privacy.html"], a[href="terms.html"]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('http') && !href.startsWith('mailto:')) {
+                const baseHref = href.split('?')[0];
+                link.href = `${baseHref}?lang=${this.currentLang}`;
+            }
         });
     }
     
